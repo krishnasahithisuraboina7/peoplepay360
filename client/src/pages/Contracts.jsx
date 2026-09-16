@@ -45,14 +45,20 @@ export default function Contracts() {
 
   const fetchMeta = async () => {
     try {
-      const empRes = await API.get('/employees');
-      const structRes = await API.get('/payroll/structures');
+      const [empRes, structRes, schedRes] = await Promise.all([
+        API.get('/employees'),
+        API.get('/payroll/structures'),
+        API.get('/working-schedules'),
+      ]);
       if (empRes.data.success) setEmployees(empRes.data.employees);
       if (structRes.data.success) {
         setStructures(structRes.data.structures);
         if (structRes.data.structures.length > 0) {
           setFormData((prev) => ({ ...prev, salaryStructure: structRes.data.structures[0]._id }));
         }
+      }
+      if (schedRes.data?.success) {
+        setSchedules(schedRes.data.schedules);
       }
     } catch (err) {
       console.error(err);
@@ -63,7 +69,11 @@ export default function Contracts() {
     e.preventDefault();
     setConflictError(null);
     try {
-      const res = await API.post('/contracts', formData);
+      const payload = { ...formData };
+      if (!payload.workingSchedule) delete payload.workingSchedule;
+      if (!payload.endDate) delete payload.endDate;
+
+      const res = await API.post('/contracts', payload);
       if (res.data.success) {
         addToast('New employment contract created successfully!', 'success');
         setShowModal(false);
@@ -203,7 +213,8 @@ export default function Contracts() {
                     required
                     value={formData.startDate}
                     onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white"
+                    onClick={(e) => e.target.showPicker?.()}
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white cursor-pointer"
                   />
                 </div>
                 <div>
@@ -212,7 +223,8 @@ export default function Contracts() {
                     type="date"
                     value={formData.endDate}
                     onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white"
+                    onClick={(e) => e.target.showPicker?.()}
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white cursor-pointer"
                   />
                 </div>
               </div>
@@ -255,6 +267,22 @@ export default function Contracts() {
                   {structures.map((s) => (
                     <option key={s._id} value={s._id}>
                       {s.name} ({s.code})
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="text-slate-400 font-semibold block mb-1">Working Schedule (Optional)</label>
+                <select
+                  value={formData.workingSchedule}
+                  onChange={(e) => setFormData({ ...formData, workingSchedule: e.target.value })}
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white"
+                >
+                  <option value="">Default (Inherit from Employee profile)</option>
+                  {schedules.map((s) => (
+                    <option key={s._id} value={s._id}>
+                      {s.name} ({s.weeklyHours} hrs/week)
                     </option>
                   ))}
                 </select>

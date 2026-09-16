@@ -39,3 +39,26 @@
   backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
+
+/* Custom Styled Date & Time Input Boxes */
+input[type="date"],
+input[type="datetime-local"],
+input[type="time"],
+input[type="month"] {
+  color-scheme: dark;
+  cursor: pointer;
+}
+
+::-webkit-calendar-picker-indicator {
+  filter: invert(0.85);
+  cursor: pointer;
+  border-radius: 6px;
+  padding: 3px;
+  transition: all 0.2s ease;
+}
+
+::-webkit-calendar-picker-indicator:hover {
+  filter: invert(1);
+  background: rgba(99, 102, 241, 0.25);
+}
+

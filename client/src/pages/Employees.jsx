@@ -528,6 +528,17 @@ export default function Employees() {
                     <option value="Intern">Intern</option>
                   </select>
                 </div>
+                <div>
+                  <label className="text-slate-400 font-semibold block mb-1">Joining Date *</label>
+                  <input
+                    type="date"
+                    required
+                    value={formData.joiningDate}
+                    onChange={(e) => setFormData({ ...formData, joiningDate: e.target.value })}
+                    onClick={(e) => e.target.showPicker?.()}
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2.5 text-white cursor-pointer"
+                  />
+                </div>
               </div>
 
               {/* Bank Details Section */}

@@ -315,7 +315,8 @@ export default function Attendance() {
           type="date"
           value={selectedDate}
           onChange={(e) => setSelectedDate(e.target.value)}
-          className="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500"
+          onClick={(e) => e.target.showPicker?.()}
+          className="bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-indigo-500 cursor-pointer"
         />
       </div>
 
@@ -486,7 +487,8 @@ export default function Attendance() {
                     required
                     value={correctionForm.newCheckIn}
                     onChange={(e) => setCorrectionForm({ ...correctionForm, newCheckIn: e.target.value })}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2 text-white"
+                    onClick={(e) => e.target.showPicker?.()}
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2 text-white cursor-pointer"
                   />
                 </div>
                 <div>
@@ -496,7 +498,8 @@ export default function Attendance() {
                     required
                     value={correctionForm.newCheckOut}
                     onChange={(e) => setCorrectionForm({ ...correctionForm, newCheckOut: e.target.value })}
-                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2 text-white"
+                    onClick={(e) => e.target.showPicker?.()}
+                    className="w-full bg-slate-950 border border-slate-800 rounded-xl p-2 text-white cursor-pointer"
                   />
                 </div>
               </div>

@@ -157,7 +157,8 @@ export default function CreatePayrunWizard() {
                   required
                   value={step1Data.periodStart}
                   onChange={(e) => setStep1Data({ ...step1Data, periodStart: e.target.value })}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-white focus:border-indigo-500"
+                  onClick={(e) => e.target.showPicker?.()}
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-white focus:border-indigo-500 cursor-pointer"
                 />
               </div>
 
@@ -168,7 +169,8 @@ export default function CreatePayrunWizard() {
                   required
                   value={step1Data.periodEnd}
                   onChange={(e) => setStep1Data({ ...step1Data, periodEnd: e.target.value })}
-                  className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-white focus:border-indigo-500"
+                  onClick={(e) => e.target.showPicker?.()}
+                  className="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-white focus:border-indigo-500 cursor-pointer"
                 />
               </div>
             </div>

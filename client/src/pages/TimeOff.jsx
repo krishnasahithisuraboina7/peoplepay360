@@ -403,7 +403,8 @@ export default function TimeOff() {
                     required
                     value={formData.startDate}
                     onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
-                    className="w-full bg-slate-900 border border-slate-800 rounded-xl p-2 text-white font-mono"
+                    onClick={(e) => e.target.showPicker?.()}
+                    className="w-full bg-slate-900 border border-slate-800 rounded-xl p-2 text-white font-mono cursor-pointer"
                   />
                 </div>
                 <div>
@@ -413,7 +414,8 @@ export default function TimeOff() {
                     required
                     value={formData.endDate}
                     onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
-                    className="w-full bg-slate-900 border border-slate-800 rounded-xl p-2 text-white font-mono"
+                    onClick={(e) => e.target.showPicker?.()}
+                    className="w-full bg-slate-900 border border-slate-800 rounded-xl p-2 text-white font-mono cursor-pointer"
                   />
                 </div>
               </div>
