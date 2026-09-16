@@ -49,6 +49,12 @@ const createContract = async (req, res, next) => {
       }
     }
 
+    // Fallback to employee's assigned schedule if empty or not provided
+    const resolvedSchedule =
+      workingSchedule && workingSchedule.toString().trim() !== ''
+        ? workingSchedule
+        : (emp.workingSchedule || null);
+
     const contract = await Contract.create({
       employee,
       contractName,
@@ -56,7 +62,7 @@ const createContract = async (req, res, next) => {
       endDate: endDate || null,
       wage,
       salaryStructure,
-      workingSchedule,
+      workingSchedule: resolvedSchedule,
       status: status || 'RUNNING',
       notes: notes || '',
     });
@@ -98,6 +104,10 @@ const updateContract = async (req, res, next) => {
           conflictingContract: overlapCheck.conflictingContract,
         });
       }
+    }
+
+    if (req.body.workingSchedule === '') {
+      req.body.workingSchedule = null;
     }
 
     contract = await Contract.findByIdAndUpdate(req.params.id, req.body, {
